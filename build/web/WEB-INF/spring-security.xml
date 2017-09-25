@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<b:beans xmlns="http://www.springframework.org/schema/security"
+         xmlns:b="http://www.springframework.org/schema/beans"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	 http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
+
+    <http auto-config="true"  use-expressions="true">
+        <session-management>
+            <!--<session-timeout>1</session-timeout>-->
+            <concurrency-control max-sessions="2" />
+        </session-management>
+        <intercept-url pattern="/login" access="permitAll"/>
+        <intercept-url pattern="/admin/*" access="hasRole('JCTL')"/>
+        <intercept-url pattern="/**" access="hasRole('ROLE_ADMIN')"/>
+    </http>
+    
+    <user-service>
+        <user name="user" password="password" authorities="ROLE_JCTL" />
+        <user name="jctl" password="jctl" authorities="ROLE_ADMIN" />
+    </user-service>
+
+</b:beans>
